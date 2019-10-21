@@ -17,34 +17,37 @@ public class MovementController : MonoBehaviour
     public Rigidbody[] feet;
 
 
-    private bool isWalking = false;
+    private bool walkingForward = false;
     private float paceTick;
-    private GameObject camera;
+    private GameObject cameraObject;
     private Rigidbody rb;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        camera = Camera.main.gameObject;
+        cameraObject = Camera.main.gameObject;
     }
-
-
 
     private void FixedUpdate()
     {
+        InputCheck();
+    }
+
+    public void InputCheck()
+    {
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            FootForward(1);
+            MoveForward(1);
 
             Debug.Log("Left Foot forward");
 
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            FootForward(0);
+            MoveForward(0);
 
             Debug.Log("Right Foot forward");
         }
@@ -64,13 +67,17 @@ public class MovementController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
-
     }
 
-    private void FootForward(int index)
+    /// <summary>
+    /// moves right or left leg depending on index
+    /// </summary>
+    /// <param name="index"></param>
+    /// 
+    private void MoveForward(int index)
     {
-        knees[index].AddForce(camera.transform.forward * forwardsForce + camera.transform.up * upwardForce, ForceMode.Impulse);
-        feet[index].AddForce(camera.transform.forward * forwardsForce, ForceMode.Impulse);
-        Debug.DrawRay(feet[index].transform.position, camera.transform.forward * forwardsForce, Color.red);
+        knees[index].AddForce(cameraObject.transform.forward * forwardsForce, ForceMode.Impulse); 
+        feet[index].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * upwardForce, ForceMode.Impulse);
+        Debug.DrawRay(feet[index].transform.position, cameraObject.transform.forward * forwardsForce, Color.red, 1f);
     }
 }
