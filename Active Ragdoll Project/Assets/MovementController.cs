@@ -7,6 +7,8 @@ public class MovementController : MonoBehaviour
     [Header("Forces")]
     [SerializeField] private float forwardsForce = 10;
     [SerializeField] private float upwardForce = 2;
+    [SerializeField] private float rotationTorque = 5;
+    [SerializeField] private float jumpForce = 5;
 
     [Header("Bodyparts")]
     public Rigidbody[] thighs;
@@ -18,47 +20,52 @@ public class MovementController : MonoBehaviour
     private bool isWalking = false;
     private float paceTick;
     private GameObject camera;
+    private Rigidbody rb;
 
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         camera = Camera.main.gameObject;
     }
 
-    private void Update()
+
+
+    private void FixedUpdate()
     {
-        if (Input.GetKey("a"))
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+
+        if (Input.GetKey(KeyCode.A))
         {
             FootForward(1);
 
             Debug.Log("Left Foot forward");
 
         }
-        if (Input.GetKey("d"))
+        if (Input.GetKey(KeyCode.D))
         {
             FootForward(0);
 
             Debug.Log("Right Foot forward");
         }
-        //else
-        //{
-        //    isWalking = false;
-        //}
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.AddRelativeTorque(Vector3.back * rotationTorque);
+            Debug.Log("Rotate right");
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.AddRelativeTorque(Vector3.forward * rotationTorque);
+            Debug.Log("Rotate left");
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
     }
-
-
-    //private void FixedUpdate()
-    //{
-    //    paceTick = paceTick + Time.fixedDeltaTime;
-    //    if (isWalking)
-    //    {
-    //        if (paceTick > 0.5)
-    //        {
-    //            FootForward(1);
-    //            paceTick = 0f;
-    //        }
-    //    }
-    //}
 
     private void FootForward(int index)
     {

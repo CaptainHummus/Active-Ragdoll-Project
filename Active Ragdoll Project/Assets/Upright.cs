@@ -25,11 +25,11 @@ public class Upright : MonoBehaviour
         if (holdUpright)
         {
             rb.AddForceAtPosition( Vector3.up * upwardForce,
-                transform.position + transform.TransformPoint(Vector3.up * yOffset),
+                new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z),
                 ForceMode.Force); // Upward force and position
 
             rb.AddForceAtPosition( Vector3.down * downwardForce,
-                transform.position + transform.TransformPoint(Vector3.down * yOffset),
+                new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z),
                 ForceMode.Force); // Upward force and position
 
         }
