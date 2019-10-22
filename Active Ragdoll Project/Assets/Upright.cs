@@ -41,10 +41,9 @@ public class Upright : MonoBehaviour
                 ForceMode.Force);
         }
 
-        // TODO: modify forces depending on if the character is grounded.
+        // TODO: Correct the raycast to follow the angle of pelvis instead of vector3.down
         if (Physics.Raycast(rb.transform.position, Vector3.down, rayDistance, 1 << 9))
         {
-            Debug.Log("Ray hit walkable");
             Debug.DrawRay(rb.transform.position, Vector3.down * rayDistance, Color.red);
             if (!isGrounded)
             {
@@ -56,7 +55,6 @@ public class Upright : MonoBehaviour
         else
         {
             Debug.DrawRay(rb.transform.position, Vector3.down * rayDistance, Color.green);
-            Debug.Log("Ray did not hit walkable");
             if (isGrounded)
             {
                 isGrounded = false;

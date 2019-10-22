@@ -18,7 +18,12 @@ public class MovementController : MonoBehaviour
 
 
     private bool walkingForward = false;
-    private float paceTick;
+    private float paceTick = 0f;
+    private float pacelength = 2f;
+
+    private float steppyTick = 0f;
+    private int steppycounter = 0;
+
     private GameObject cameraObject;
     private Rigidbody rb;
 
@@ -32,14 +37,20 @@ public class MovementController : MonoBehaviour
     private void FixedUpdate()
     {
         InputCheck();
+        paceTick += Time.fixedDeltaTime;
+        steppyTick += Time.fixedDeltaTime;
+        if (paceTick >= pacelength)
+        {
+            paceTick = 0;
+        }
     }
 
     public void InputCheck()
     {
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
         if (Input.GetKeyDown(KeyCode.A))
         {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             MoveForward(1);
 
             Debug.Log("Left Foot forward");
@@ -47,6 +58,7 @@ public class MovementController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             MoveForward(0);
 
             Debug.Log("Right Foot forward");
@@ -54,18 +66,32 @@ public class MovementController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             rb.constraints = RigidbodyConstraints.None;
-            rb.AddRelativeTorque(Vector3.back * rotationTorque);
-            Debug.Log("Rotate right");
+            rb.AddRelativeTorque(Vector3.forward * rotationTorque);
+            //feet[0].AddRelativeTorque(Vector3.back * rotationTorque/2);
+            //feet[1].AddRelativeTorque(Vector3.back * rotationTorque/2);
+            SteppySteps('R');
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             rb.constraints = RigidbodyConstraints.None;
-            rb.AddRelativeTorque(Vector3.forward * rotationTorque);
-            Debug.Log("Rotate left");
+            rb.AddRelativeTorque(Vector3.back * rotationTorque);
+            //feet[1].AddRelativeTorque(Vector3.forward * rotationTorque/2);
+            //feet[0].AddRelativeTorque(Vector3.forward * rotationTorque/2);
+            SteppySteps('L');
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            //rotate thighs and pelvis in opposite direction to make character crouch a bit
+            rb.AddTorque(Vector3.right * rotationTorque / 2);
+            thighs[0].AddTorque(Vector3.left * rotationTorque / 2);
+            thighs[1].AddTorque(Vector3.left * rotationTorque / 2);
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            MoveForward(1);
+            MoveForward(0);
         }
     }
 
@@ -73,11 +99,49 @@ public class MovementController : MonoBehaviour
     /// moves right or left leg depending on index
     /// </summary>
     /// <param name="index"></param>
-    /// 
     private void MoveForward(int index)
     {
-        knees[index].AddForce(cameraObject.transform.forward * forwardsForce, ForceMode.Impulse); 
+        knees[index].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * forwardsForce, ForceMode.Impulse); 
         feet[index].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * upwardForce, ForceMode.Impulse);
         Debug.DrawRay(feet[index].transform.position, cameraObject.transform.forward * forwardsForce, Color.red, 1f);
+    }
+
+    private void SteppySteps(char direction)
+    {
+        if (steppyTick > 0.10)
+        {
+            knees[steppycounter % 2].AddForce(cameraObject.transform.up * forwardsForce * 2 + cameraObject.transform.forward, ForceMode.Impulse);
+            feet[steppycounter % 2].AddForce(-cameraObject.transform.up * upwardForce * 2, ForceMode.Impulse);
+            switch (direction)
+            {
+                case 'R':
+                    feet[steppycounter % 2].AddRelativeTorque(Vector3.forward * rotationTorque / 2, ForceMode.Impulse);
+                    break;
+
+                case 'L':
+                    feet[steppycounter % 2].AddRelativeTorque(Vector3.back * rotationTorque / 2, ForceMode.Impulse);;
+                    break;
+
+                default:
+                    Debug.LogError("INVALID ROTATION DIRECTION");
+                    break;
+            }
+            steppycounter++;
+            steppyTick = 0;
+        }
+        switch (direction)
+        {
+            case 'R':
+                feet[1].AddForce(cameraObject.transform.forward * upwardForce + cameraObject.transform.up * forwardsForce);
+                break;
+
+            case 'L':
+                feet[0].AddForce(cameraObject.transform.forward * upwardForce + cameraObject.transform.up * forwardsForce);
+                break;
+
+            default:
+                Debug.LogError("INVALID ROTATION DIRECTION");
+                break;
+        }
     }
 }
