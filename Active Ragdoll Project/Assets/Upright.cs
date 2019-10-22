@@ -9,6 +9,8 @@ public class Upright : MonoBehaviour
     [SerializeField] private float upwardForce = 20;
     [SerializeField] private float downwardForce = 10; // keep downward force
     [SerializeField] private float yOffset = 1.5f;
+    [SerializeField] private float risingModifier = 20f;
+    [SerializeField] private float sinkingModifier = 20f;
 
     [SerializeField] private float rayDistance = 1f;
 
@@ -44,11 +46,22 @@ public class Upright : MonoBehaviour
         {
             Debug.Log("Ray hit walkable");
             Debug.DrawRay(rb.transform.position, Vector3.down * rayDistance, Color.red);
+            if (!isGrounded)
+            {
+                isGrounded = true;
+
+            }
+            rb.AddForce(Vector3.up * risingModifier, ForceMode.Force);
         }
         else
         {
             Debug.DrawRay(rb.transform.position, Vector3.down * rayDistance, Color.green);
             Debug.Log("Ray did not hit walkable");
+            if (isGrounded)
+            {
+                isGrounded = false;
+            }
+            rb.AddForce(Vector3.down * sinkingModifier, ForceMode.Force);
         }
 
     }
