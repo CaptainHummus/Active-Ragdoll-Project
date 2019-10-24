@@ -19,7 +19,7 @@ public class MovementController : MonoBehaviour
 
     private bool walkingForward = false;
     private float paceTick = 0f;
-    private float pacelength = 2f;
+    [SerializeField] private float pacelength = 2f;
 
     private float steppyTick = 0f;
     private int steppycounter = 0;
@@ -37,17 +37,30 @@ public class MovementController : MonoBehaviour
     private void FixedUpdate()
     {
         InputCheck();
-        paceTick += Time.fixedDeltaTime;
         steppyTick += Time.fixedDeltaTime;
-        if (paceTick >= pacelength)
-        {
-            paceTick = 0;
-        }
+        PaceSequence();
     }
 
     public void InputCheck()
     {
 
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            walkingForward = true;
+
+            Debug.Log("Walking Forward");
+
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            walkingForward = false;
+
+            Debug.Log("Walking Forward");
+
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -65,27 +78,25 @@ public class MovementController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            rb.constraints = RigidbodyConstraints.None;
             rb.AddRelativeTorque(Vector3.forward * rotationTorque);
-            //feet[0].AddRelativeTorque(Vector3.back * rotationTorque/2);
-            //feet[1].AddRelativeTorque(Vector3.back * rotationTorque/2);
             SteppySteps('R');
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rb.constraints = RigidbodyConstraints.None;
             rb.AddRelativeTorque(Vector3.back * rotationTorque);
-            //feet[1].AddRelativeTorque(Vector3.forward * rotationTorque/2);
-            //feet[0].AddRelativeTorque(Vector3.forward * rotationTorque/2);
             SteppySteps('L');
         }
         if (Input.GetKey(KeyCode.Space))
         {
             rb.constraints = RigidbodyConstraints.None;
-            //rotate thighs and pelvis in opposite direction to make character crouch a bit
+            //rotate leg parts and pelvis in opposite directions to make character crouch a bit
             rb.AddTorque(Vector3.right * rotationTorque / 2);
             thighs[0].AddTorque(Vector3.left * rotationTorque / 2);
             thighs[1].AddTorque(Vector3.left * rotationTorque / 2);
+            shins[0].AddTorque(Vector3.right * rotationTorque / 2);
+            shins[1].AddTorque(Vector3.right * rotationTorque / 2);
+            feet[0].AddTorque(Vector3.left * rotationTorque / 2);
+            feet[1].AddTorque(Vector3.left * rotationTorque / 2);
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -95,10 +106,42 @@ public class MovementController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// moves right or left leg depending on index
-    /// </summary>
-    /// <param name="index"></param>
+    private void PaceSequence()
+    {
+        float magnitude = 1f;
+        if (paceTick > pacelength * magnitude)
+        {
+            paceTick = 0;
+        }
+
+        if (walkingForward)
+        {
+            paceTick += Time.fixedDeltaTime;
+            if (paceTick > 0.9 * magnitude)
+            {
+                //pause between steps
+            }
+            else if (paceTick > 0.5 * magnitude)
+            {
+                knees[1].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * forwardsForce, ForceMode.Impulse);
+                feet[1].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * upwardForce, ForceMode.Impulse);
+                feet[0].AddForce(-feet[0].transform.up * upwardForce, ForceMode.Impulse);
+            }
+            else if (paceTick > 0.4 * magnitude)
+            {
+                //pause between steps
+            }
+            else
+            {
+                knees[0].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * forwardsForce, ForceMode.Impulse);
+                feet[0].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * upwardForce, ForceMode.Impulse);
+                feet[1].AddForce(-feet[0].transform.up * upwardForce, ForceMode.Impulse);
+            }
+            rb.AddForce(rb.transform.forward * upwardForce, ForceMode.Impulse);
+        }
+
+    }
+
     private void MoveForward(int index)
     {
         knees[index].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * forwardsForce, ForceMode.Impulse); 
@@ -106,6 +149,7 @@ public class MovementController : MonoBehaviour
         Debug.DrawRay(feet[index].transform.position, cameraObject.transform.forward * forwardsForce, Color.red, 1f);
     }
 
+    // This method needs improvement to make rotational steps clearer
     private void SteppySteps(char direction)
     {
         if (steppyTick > 0.10)
