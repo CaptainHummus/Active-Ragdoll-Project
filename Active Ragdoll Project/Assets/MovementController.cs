@@ -49,39 +49,18 @@ public class MovementController : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             walkingForward = true;
-
-            Debug.Log("Walking Forward");
-
         }
         if (Input.GetKeyUp(KeyCode.W))
         {
             rb.constraints = RigidbodyConstraints.None;
             walkingForward = false;
-
-            Debug.Log("Walking Forward");
-
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            MoveForward(1);
-
-            Debug.Log("Left Foot forward");
-
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            MoveForward(0);
-
-            Debug.Log("Right Foot forward");
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             rb.AddRelativeTorque(Vector3.forward * rotationTorque);
             SteppySteps('R');
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             rb.AddRelativeTorque(Vector3.back * rotationTorque);
             SteppySteps('L');
