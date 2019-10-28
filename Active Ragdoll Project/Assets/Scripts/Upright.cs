@@ -8,7 +8,7 @@ public class Upright : MonoBehaviour
     [SerializeField] private bool isGrounded = true;
     [SerializeField] private float upwardForce = 20;
     [SerializeField] private float downwardForce = 10; // keep downward force
-    [SerializeField] private float yOffset = 1.5f;
+    //[SerializeField] private float yOffset = 1.5f;
     [SerializeField] private float risingModifier = 20f;
     [SerializeField] private float sinkingModifier = 20f;
 

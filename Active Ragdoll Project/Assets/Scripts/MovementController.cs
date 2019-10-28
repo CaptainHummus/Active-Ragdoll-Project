@@ -18,6 +18,7 @@ public class MovementController : MonoBehaviour
 
 
     private bool walkingForward = false;
+    private bool walkingBackward = false;
     private float paceTick = 0f;
     [SerializeField] private float pacelength = 2f;
 
@@ -54,6 +55,16 @@ public class MovementController : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.None;
             walkingForward = false;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            walkingBackward = true;
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            walkingBackward = false;
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -102,9 +113,12 @@ public class MovementController : MonoBehaviour
             }
             else if (paceTick > 0.5 * magnitude)
             {
-                knees[1].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * forwardsForce, ForceMode.Impulse);
-                feet[1].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * upwardForce, ForceMode.Impulse);
+                //Adding forces from the pelvises "forward" and "upward"
+                knees[1].AddForce(-transform.up * forwardsForce + transform.forward * forwardsForce, ForceMode.Impulse);
+                feet[1].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce, ForceMode.Impulse);
                 feet[0].AddForce(-feet[0].transform.up * upwardForce, ForceMode.Impulse);
+
+                //Debug.DrawRay(feet[1].transform.position, transform.forward, Color.red, 1f);
             }
             else if (paceTick > 0.4 * magnitude)
             {
@@ -112,12 +126,46 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                knees[0].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * forwardsForce, ForceMode.Impulse);
-                feet[0].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * upwardForce, ForceMode.Impulse);
+                knees[0].AddForce(-transform.up * forwardsForce + transform.forward * forwardsForce, ForceMode.Impulse);
+                feet[0].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce, ForceMode.Impulse);
                 feet[1].AddForce(-feet[0].transform.up * upwardForce, ForceMode.Impulse);
+
+                //Debug.DrawRay(feet[0].transform.position, transform.forward, Color.red, 1f);
             }
             rb.AddForce(rb.transform.forward * upwardForce, ForceMode.Impulse);
         }
+
+        if (walkingBackward)
+        {
+            paceTick += Time.fixedDeltaTime;
+            if (paceTick > 0.9 * magnitude)
+            {
+                //pause between steps
+            }
+            else if (paceTick > 0.5 * magnitude)
+            {
+                //Adding forces from the pelvises "forward" and "upward"
+                knees[1].AddForce(transform.up * forwardsForce + transform.forward * forwardsForce, ForceMode.Impulse);
+                shins[1].AddForce(transform.forward * upwardForce, ForceMode.Impulse);
+                //feet[0].AddForce(feet[0].transform.up * upwardForce, ForceMode.Impulse);
+
+                //Debug.DrawRay(feet[1].transform.position, transform.forward, Color.red, 1f);
+            }
+            else if (paceTick > 0.4 * magnitude)
+            {
+                //pause between steps
+            }
+            else
+            {
+                knees[0].AddForce(transform.up * forwardsForce + transform.forward * forwardsForce, ForceMode.Impulse);
+                shins[0].AddForce(transform.forward * upwardForce, ForceMode.Impulse);
+                //feet[1].AddForce(feet[0].transform.up * upwardForce, ForceMode.Impulse);
+
+                //Debug.DrawRay(feet[0].transform.position, transform.forward, Color.red, 1f);
+            }
+            //rb.AddForce(-rb.transform.forward * upwardForce, ForceMode.Impulse);
+        }
+
 
     }
 
