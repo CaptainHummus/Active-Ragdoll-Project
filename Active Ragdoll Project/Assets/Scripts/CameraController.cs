@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
@@ -41,8 +42,9 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        playerMagnet.position = playerTransform.position;
-        transform.localPosition = Vector3.back * distanceToPlayer;
+        //playerMagnet.position = playerTransform.position;
+        playerMagnet.DOMove(playerTransform.position, 1f);
+        transform.DOLocalMoveZ(-distanceToPlayer, 1f);
     }
 
     private void CheckZoomDistance()

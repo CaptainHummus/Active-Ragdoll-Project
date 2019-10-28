@@ -17,8 +17,9 @@ public class MovementController : MonoBehaviour
     public Rigidbody[] feet;
 
 
-    private bool walkingForward = false;
-    private bool walkingBackward = false;
+    private bool walkingForward;
+    private bool walkingBackward;
+    private bool sprinting;
     private float paceTick = 0f;
     [SerializeField] private float pacelength = 2f;
 
@@ -34,17 +35,36 @@ public class MovementController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         cameraObject = Camera.main.gameObject;
     }
+    private void Update()
+    {
+        InputCheck();
+    }
 
     private void FixedUpdate()
     {
-        InputCheck();
         steppyTick += Time.fixedDeltaTime;
         PaceSequence();
     }
 
     public void InputCheck()
     {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (!sprinting)
+            {
+                forwardsForce *= 2;
+                sprinting = true;
+            }
 
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            if (sprinting)
+            {
+                forwardsForce /= 2;
+                sprinting = false;
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -60,11 +80,13 @@ public class MovementController : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.None;
             walkingForward = false;
+
         }
-         if (Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKeyUp(KeyCode.S))
         {
             rb.constraints = RigidbodyConstraints.None;
             walkingBackward = false;
+
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -115,7 +137,7 @@ public class MovementController : MonoBehaviour
             else if (paceTick > 0.5 * magnitude)
             {
                 //Adding forces from the pelvises "forward" and "upward"
-                knees[1].AddForce(-transform.up * forwardsForce + transform.forward * forwardsForce, ForceMode.Impulse);
+                knees[1].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce * 2, ForceMode.Impulse);
                 feet[1].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce, ForceMode.Impulse);
                 feet[0].AddForce(-feet[0].transform.up * upwardForce, ForceMode.Impulse);
 
@@ -127,7 +149,7 @@ public class MovementController : MonoBehaviour
             }
             else
             {
-                knees[0].AddForce(-transform.up * forwardsForce + transform.forward * forwardsForce, ForceMode.Impulse);
+                knees[0].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce * 2, ForceMode.Impulse);
                 feet[0].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce, ForceMode.Impulse);
                 feet[1].AddForce(-feet[0].transform.up * upwardForce, ForceMode.Impulse);
 
