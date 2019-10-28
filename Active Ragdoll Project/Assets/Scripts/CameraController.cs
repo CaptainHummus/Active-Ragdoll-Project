@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private float mouseX;
     [SerializeField] private float mouseY;
+    [SerializeField] private float mouseScroll;
     [SerializeField] private float rotationX;
     [SerializeField] private float rotationY;
     [SerializeField] private float mouseSensitivity;
@@ -27,14 +28,36 @@ public class CameraController : MonoBehaviour
     {
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
+        mouseScroll = Input.GetAxis("Mouse ScrollWheel");
 
         playerMagnet.rotation = Quaternion.Euler(rotationX += mouseY * mouseSensitivity, rotationY += mouseX * mouseSensitivity, 0f);
+
+        CheckZoomDistance();
+
         //Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked ;
+
     }
 
     private void LateUpdate()
     {
         playerMagnet.position = playerTransform.position;
+        transform.localPosition = Vector3.back * distanceToPlayer;
+    }
+
+    private void CheckZoomDistance()
+    {
+        if (distanceToPlayer < 1)
+        {
+            distanceToPlayer = 1;
+            return;
+        }
+        else if (distanceToPlayer > 10)
+        {
+            distanceToPlayer = 10;
+            return;
+        }
+        distanceToPlayer -= mouseScroll * mouseSensitivity;
+
     }
 }

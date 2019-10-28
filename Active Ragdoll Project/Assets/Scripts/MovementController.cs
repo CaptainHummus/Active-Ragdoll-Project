@@ -61,7 +61,7 @@ public class MovementController : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
             walkingForward = false;
         }
-        if (Input.GetKeyUp(KeyCode.S))
+         if (Input.GetKeyUp(KeyCode.S))
         {
             rb.constraints = RigidbodyConstraints.None;
             walkingBackward = false;
