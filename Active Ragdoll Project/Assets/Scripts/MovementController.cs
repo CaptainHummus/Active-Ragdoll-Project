@@ -51,15 +51,15 @@ public class MovementController : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             walkingForward = true;
         }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            walkingBackward = true;
+        }
         if (Input.GetKeyUp(KeyCode.W))
         {
             rb.constraints = RigidbodyConstraints.None;
             walkingForward = false;
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            walkingBackward = true;
         }
         if (Input.GetKeyUp(KeyCode.S))
         {
@@ -68,13 +68,13 @@ public class MovementController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.AddRelativeTorque(Vector3.forward * rotationTorque);
-            SteppySteps('R');
+            rb.AddRelativeTorque(Vector3.back * rotationTorque);
+            SteppySteps('L');
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.AddRelativeTorque(Vector3.back * rotationTorque);
-            SteppySteps('L');
+            rb.AddRelativeTorque(Vector3.forward * rotationTorque);
+            SteppySteps('R');
         }
         if (Input.GetKey(KeyCode.Space))
         {
@@ -104,6 +104,7 @@ public class MovementController : MonoBehaviour
             paceTick = 0;
         }
 
+        #region Walk Forwards
         if (walkingForward)
         {
             paceTick += Time.fixedDeltaTime;
@@ -134,11 +135,13 @@ public class MovementController : MonoBehaviour
             }
             rb.AddForce(rb.transform.forward * upwardForce, ForceMode.Impulse);
         }
+        #endregion
 
+        #region Backwards Walk
         if (walkingBackward)
         {
             paceTick += Time.fixedDeltaTime;
-            if (paceTick > 0.9 * magnitude)
+            if (paceTick > 0.8 * magnitude)
             {
                 //pause between steps
             }
@@ -151,7 +154,7 @@ public class MovementController : MonoBehaviour
 
                 //Debug.DrawRay(feet[1].transform.position, transform.forward, Color.red, 1f);
             }
-            else if (paceTick > 0.4 * magnitude)
+            else if (paceTick > 0.3 * magnitude)
             {
                 //pause between steps
             }
@@ -165,6 +168,7 @@ public class MovementController : MonoBehaviour
             }
             //rb.AddForce(-rb.transform.forward * upwardForce, ForceMode.Impulse);
         }
+        #endregion
 
 
     }
