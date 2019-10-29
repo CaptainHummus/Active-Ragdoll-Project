@@ -20374,12 +20374,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1064157913}
   playerMagnet: {fileID: 239267632}
   distanceToPlayer: 3
-  mouseX: 0
-  mouseY: 0
-  mouseScroll: 0
-  rotationX: 0
-  rotationY: 0
-  mouseSensitivity: 2
+  mouseSensitivity: 100
 --- !u!114 &616363972
 MonoBehaviour:
   m_ObjectHideFlags: 0

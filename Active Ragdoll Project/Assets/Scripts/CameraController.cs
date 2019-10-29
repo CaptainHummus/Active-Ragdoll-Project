@@ -8,21 +8,18 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Transform playerMagnet;
     [SerializeField] private float distanceToPlayer;
-
-
-    [SerializeField] private float mouseX;
-    [SerializeField] private float mouseY;
-    [SerializeField] private float mouseScroll;
-    [SerializeField] private float rotationX;
-    [SerializeField] private float rotationY;
     [SerializeField] private float mouseSensitivity;
 
-
-
+    private float mouseX;
+    private float mouseY;
+    private float mouseScroll;
+    private float rotationX;
+    private float rotationY;
 
     private void Start()
     {
         playerMagnet = transform.root;
+        DOTween.SetTweensCapacity(500, 50); //done because Dotween warned me about too low capacity
     }
 
     private void Update()
@@ -30,8 +27,8 @@ public class CameraController : MonoBehaviour
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
         mouseScroll = Input.GetAxis("Mouse ScrollWheel");
-
-        playerMagnet.rotation = Quaternion.Euler(rotationX += mouseY * mouseSensitivity, rotationY += mouseX * mouseSensitivity, 0f);
+        rotationX = Mathf.Clamp(rotationX, -15f, 90f);
+        playerMagnet.rotation = Quaternion.Euler(rotationX += mouseY * Time.deltaTime * mouseSensitivity, rotationY += mouseX * Time.deltaTime * mouseSensitivity, 0f);
 
         CheckZoomDistance();
 
@@ -49,17 +46,8 @@ public class CameraController : MonoBehaviour
 
     private void CheckZoomDistance()
     {
-        if (distanceToPlayer < 1)
-        {
-            distanceToPlayer = 1;
-            return;
-        }
-        else if (distanceToPlayer > 10)
-        {
-            distanceToPlayer = 10;
-            return;
-        }
-        distanceToPlayer -= mouseScroll * mouseSensitivity;
+        distanceToPlayer -= mouseScroll * Time.deltaTime * mouseSensitivity;
+        distanceToPlayer = Mathf.Clamp(distanceToPlayer, 1f, 10f);
 
     }
 }
