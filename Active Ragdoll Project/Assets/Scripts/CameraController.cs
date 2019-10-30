@@ -27,7 +27,9 @@ public class CameraController : MonoBehaviour
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
         mouseScroll = Input.GetAxis("Mouse ScrollWheel");
+
         rotationX = Mathf.Clamp(rotationX, -15f, 90f);
+
         playerMagnet.rotation = Quaternion.Euler(rotationX += mouseY * Time.deltaTime * mouseSensitivity, rotationY += mouseX * Time.deltaTime * mouseSensitivity, 0f);
 
         CheckZoomDistance();

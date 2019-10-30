@@ -29593,6 +29593,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4062878060799069749}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1064651533 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4062878060711981906, guid: 47abf8947cd30d648980e5d2d2863df2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4062878060799069749}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4c20d90de586c47b0d176a04aca889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1130351158
 GameObject:
   m_ObjectHideFlags: 0
@@ -32001,6 +32013,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1273673371 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4062878059878272234, guid: 47abf8947cd30d648980e5d2d2863df2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4062878060799069749}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c4c20d90de586c47b0d176a04aca889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1279906508
 GameObject:
   m_ObjectHideFlags: 0
@@ -58553,7 +58577,7 @@ GameObject:
   - component: {fileID: 2070624379}
   - component: {fileID: 2070624378}
   - component: {fileID: 2070624377}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62383,6 +62407,31 @@ PrefabInstance:
     - target: {fileID: 1679962993, guid: 47abf8947cd30d648980e5d2d2863df2, type: 3}
       propertyPath: m_AngularYLimit.limit
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062878059878272235, guid: 47abf8947cd30d648980e5d2d2863df2,
+        type: 3}
+      propertyPath: uprightComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062878059878272235, guid: 47abf8947cd30d648980e5d2d2863df2,
+        type: 3}
+      propertyPath: uprightComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 1064651533}
+    - target: {fileID: 4062878059878272235, guid: 47abf8947cd30d648980e5d2d2863df2,
+        type: 3}
+      propertyPath: uprightComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 1273673371}
+    - target: {fileID: 4062878059878272234, guid: 47abf8947cd30d648980e5d2d2863df2,
+        type: 3}
+      propertyPath: isPelvis
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062878059878272234, guid: 47abf8947cd30d648980e5d2d2863df2,
+        type: 3}
+      propertyPath: sinkingModifier
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47abf8947cd30d648980e5d2d2863df2, type: 3}

@@ -16,12 +16,13 @@ public class MovementController : MonoBehaviour
     public Rigidbody[] shins;
     public Rigidbody[] feet;
 
-
+    [Header ("Misc")]
+    public Upright[] uprightComponents;
+    [SerializeField] private float pacelength = 2f;
     private bool walkingForward;
     private bool walkingBackward;
     private bool sprinting;
     private float paceTick = 0f;
-    [SerializeField] private float pacelength = 2f;
 
     private float steppyTick = 0f;
     private int steppycounter = 0;
@@ -115,6 +116,10 @@ public class MovementController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             MoveForward(1);
             MoveForward(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ToggleUpright();
         }
     }
 
@@ -239,6 +244,14 @@ public class MovementController : MonoBehaviour
             default:
                 Debug.LogError("INVALID ROTATION DIRECTION");
                 break;
+        }
+    }
+
+    private void ToggleUpright()
+    {
+        foreach (Upright bodypart in uprightComponents)
+        {
+            bodypart.holdUpright = !bodypart.holdUpright;
         }
     }
 }
