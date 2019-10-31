@@ -289,6 +289,8 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    //TODO: slowly tilt pelvis to normal angle of floor.
+
     private void GroundCheck()
     {
         if (Physics.Raycast(rb.transform.position, -transform.forward, rayDistance, 1 << 9))
