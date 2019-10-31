@@ -100,27 +100,27 @@ public class MovementController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             rb.constraints = RigidbodyConstraints.None;
-            rb.AddRelativeTorque(Vector3.back * rotationTorque);
+            rb.AddRelativeTorque(Vector3.back * rotationTorque * Time.deltaTime);
             SteppySteps('L');
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
         if (Input.GetKey(KeyCode.D))
         {
             rb.constraints = RigidbodyConstraints.None;
-            rb.AddRelativeTorque(Vector3.forward * rotationTorque);
+            rb.AddRelativeTorque(Vector3.forward * rotationTorque * Time.deltaTime);
             SteppySteps('R');
             rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
         if (Input.GetKey(KeyCode.Space))
         {
             //rb.constraints = RigidbodyConstraints.None;
-            rb.AddTorque(Vector3.right * rotationTorque / 2);             //rotate leg parts and pelvis in opposite directions to make character crouch a bit
-            thighs[0].AddTorque(Vector3.left * rotationTorque / 2);
-            thighs[1].AddTorque(Vector3.left * rotationTorque / 2);
-            shins[0].AddTorque(Vector3.right * rotationTorque / 2);
-            shins[1].AddTorque(Vector3.right * rotationTorque / 2);
-            feet[0].AddTorque(Vector3.left * rotationTorque / 2);
-            feet[1].AddTorque(Vector3.left * rotationTorque / 2);
+            rb.AddTorque(Vector3.right * rotationTorque  *Time.deltaTime);             //rotate leg parts and pelvis in opposite directions to make character crouch a bit
+            thighs[0].AddTorque(Vector3.forward * rotationTorque * Time.deltaTime);
+            thighs[1].AddTorque(Vector3.forward * rotationTorque * Time.deltaTime);
+            shins[0].AddTorque(Vector3.back * rotationTorque * Time.deltaTime);
+            shins[1].AddTorque(Vector3.back * rotationTorque * Time.deltaTime);
+            feet[0].AddTorque(Vector3.forward * rotationTorque * Time.deltaTime);
+            feet[1].AddTorque(Vector3.forward * rotationTorque * Time.deltaTime);
             jumpCharge += Time.deltaTime;
             jumpCharge = Mathf.Clamp(jumpCharge, 0f, 1.5f);
             ToggleUpright(false);
@@ -160,6 +160,7 @@ public class MovementController : MonoBehaviour
             paceTick += Time.fixedDeltaTime;
             if (paceTick > 0.9 * magnitude)
             {
+                feet[0].AddForce(Vector3.down * upwardForce * 2, ForceMode.Impulse);
                 //pause between steps
             }
             else if (paceTick > 0.5 * magnitude)
@@ -173,13 +174,14 @@ public class MovementController : MonoBehaviour
             }
             else if (paceTick > 0.4 * magnitude)
             {
+                feet[1].AddForce(Vector3.down * upwardForce *2, ForceMode.Impulse);
                 //pause between steps
             }
             else
             {
                 knees[0].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce * 2, ForceMode.Impulse);
                 feet[0].AddForce(-transform.up * forwardsForce + transform.forward * upwardForce, ForceMode.Impulse);
-                feet[1].AddForce(-feet[0].transform.up * upwardForce, ForceMode.Impulse);
+                feet[1].AddForce(-feet[1].transform.up * upwardForce, ForceMode.Impulse);
 
                 //Debug.DrawRay(feet[0].transform.position, transform.forward, Color.red, 1f);
             }

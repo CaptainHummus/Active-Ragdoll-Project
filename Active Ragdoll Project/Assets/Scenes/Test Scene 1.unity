@@ -62451,7 +62451,7 @@ PrefabInstance:
     - target: {fileID: 4062878059878272235, guid: 47abf8947cd30d648980e5d2d2863df2,
         type: 3}
       propertyPath: rotationTorque
-      value: 8
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 4062878059147145181, guid: 47abf8947cd30d648980e5d2d2863df2,
         type: 3}
