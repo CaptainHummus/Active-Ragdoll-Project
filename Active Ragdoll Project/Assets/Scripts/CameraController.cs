@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Transform playerMagnet;
     [SerializeField] private float distanceToPlayer;
-    [SerializeField] private float mouseSensitivity;
+    [SerializeField] private float mouseSensitivity = 100;
 
     private float mouseX;
     private float mouseY;
@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
         mouseY = Input.GetAxis("Mouse Y");
         mouseScroll = Input.GetAxis("Mouse ScrollWheel");
 
-        rotationX = Mathf.Clamp(rotationX, -15f, 90f);
+        rotationX = Mathf.Clamp(rotationX, -5f, 90f);
 
         playerMagnet.rotation = Quaternion.Euler(rotationX += mouseY * Time.deltaTime * mouseSensitivity, rotationY += mouseX * Time.deltaTime * mouseSensitivity, 0f);
 
@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         //playerMagnet.position = playerTransform.position;
-        playerMagnet.DOMove(playerTransform.position, 1f);
+        playerMagnet.DOMove(playerTransform.position, 0.5f);
         transform.DOLocalMoveZ(-distanceToPlayer, 1f);
     }
 

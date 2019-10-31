@@ -9,12 +9,19 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float upwardForce = 2;
     [SerializeField] private float rotationTorque = 5;
     [SerializeField] private float jumpForce = 5;
+    [SerializeField] private float jumpCharge;
 
     [Header("Bodyparts")]
     public Rigidbody[] thighs;
     public Rigidbody[] knees;
     public Rigidbody[] shins;
     public Rigidbody[] feet;
+
+    [Header("Upright Raycast Mods")]
+    [SerializeField] private float risingModifier = 20f;
+    [SerializeField] private float sinkingModifier = 20f;
+    [SerializeField] private float rayDistance = 1f;
+    private bool isGrounded;
 
     [Header ("Misc")]
     public Upright[] uprightComponents;
@@ -28,12 +35,12 @@ public class MovementController : MonoBehaviour
     private int steppycounter = 0;
 
     private GameObject cameraObject;
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
 
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         cameraObject = Camera.main.gameObject;
     }
     private void Update()
@@ -45,6 +52,7 @@ public class MovementController : MonoBehaviour
     {
         steppyTick += Time.fixedDeltaTime;
         PaceSequence();
+        GroundCheck();
     }
 
     public void InputCheck()
@@ -79,43 +87,58 @@ public class MovementController : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.W))
         {
-            rb.constraints = RigidbodyConstraints.None;
+            //rb.constraints = RigidbodyConstraints.None;
             walkingForward = false;
 
         }
         if (Input.GetKeyUp(KeyCode.S))
         {
-            rb.constraints = RigidbodyConstraints.None;
+            //rb.constraints = RigidbodyConstraints.None;
             walkingBackward = false;
 
         }
         if (Input.GetKey(KeyCode.A))
         {
+            rb.constraints = RigidbodyConstraints.None;
             rb.AddRelativeTorque(Vector3.back * rotationTorque);
             SteppySteps('L');
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
         if (Input.GetKey(KeyCode.D))
         {
+            rb.constraints = RigidbodyConstraints.None;
             rb.AddRelativeTorque(Vector3.forward * rotationTorque);
             SteppySteps('R');
+            rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.constraints = RigidbodyConstraints.None;
-            //rotate leg parts and pelvis in opposite directions to make character crouch a bit
-            rb.AddTorque(Vector3.right * rotationTorque / 2);
+            //rb.constraints = RigidbodyConstraints.None;
+            rb.AddTorque(Vector3.right * rotationTorque / 2);             //rotate leg parts and pelvis in opposite directions to make character crouch a bit
             thighs[0].AddTorque(Vector3.left * rotationTorque / 2);
             thighs[1].AddTorque(Vector3.left * rotationTorque / 2);
             shins[0].AddTorque(Vector3.right * rotationTorque / 2);
             shins[1].AddTorque(Vector3.right * rotationTorque / 2);
             feet[0].AddTorque(Vector3.left * rotationTorque / 2);
             feet[1].AddTorque(Vector3.left * rotationTorque / 2);
+            jumpCharge += Time.deltaTime;
+            jumpCharge = Mathf.Clamp(jumpCharge, 0f, 1.5f);
+            ToggleUpright(false);
         }
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) && isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            MoveForward(1);
-            MoveForward(0);
+            rb.AddForce(Vector3.up * jumpForce * jumpCharge, ForceMode.Impulse);
+            rb.AddForce(-rb.transform.up * jumpForce * jumpCharge, ForceMode.Impulse);
+            feet[1].AddForce(-transform.up * jumpForce * jumpCharge/10, ForceMode.Impulse);
+            feet[0].AddForce(-transform.up * jumpForce * jumpCharge/10, ForceMode.Impulse);
+            jumpCharge = 0f;
+            rb.constraints = RigidbodyConstraints.None;
+            //ToggleUpright(true);
+        }
+        else if (Input.GetKeyUp(KeyCode.Space) && !isGrounded)
+        {
+            ToggleUpright(true);
+            jumpCharge = 0f;
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -200,7 +223,7 @@ public class MovementController : MonoBehaviour
 
     }
 
-    private void MoveForward(int index)
+    private void OldMoveForward(int index)
     {
         knees[index].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * forwardsForce, ForceMode.Impulse); 
         feet[index].AddForce(cameraObject.transform.forward * forwardsForce + cameraObject.transform.up * upwardForce, ForceMode.Impulse);
@@ -210,7 +233,7 @@ public class MovementController : MonoBehaviour
     // This method needs improvement to make rotational steps clearer
     private void SteppySteps(char direction)
     {
-        if (steppyTick > 0.10)
+        if (steppyTick > 0.20)
         {
             knees[steppycounter % 2].AddForce(cameraObject.transform.up * forwardsForce * 2 + cameraObject.transform.forward, ForceMode.Impulse);
             feet[steppycounter % 2].AddForce(-cameraObject.transform.up * upwardForce * 2, ForceMode.Impulse);
@@ -252,6 +275,39 @@ public class MovementController : MonoBehaviour
         foreach (Upright bodypart in uprightComponents)
         {
             bodypart.holdUpright = !bodypart.holdUpright;
+        }
+    }
+
+    private void ToggleUpright(bool mode)
+    {
+        //rb.constraints = RigidbodyConstraints.None;
+        foreach (Upright bodypart in uprightComponents)
+        {
+            bodypart.holdUpright = mode;
+        }
+    }
+
+    private void GroundCheck()
+    {
+        if (Physics.Raycast(rb.transform.position, -transform.forward, rayDistance, 1 << 9))
+        {
+            Debug.DrawRay(rb.transform.position, -transform.forward * rayDistance, Color.red);
+            if (!isGrounded)
+            {
+                isGrounded = true;
+                ToggleUpright(true);
+            }
+            rb.AddForce(Vector3.up * risingModifier, ForceMode.Force); //TODO use raycast normal to add forces instead of "up"
+        }
+        else
+        {
+            Debug.DrawRay(rb.transform.position, -transform.forward * rayDistance, Color.green);
+            if (isGrounded)
+            {
+                isGrounded = false;
+                //ToggleUpright(false);
+            }
+            rb.AddForce(Vector3.down * sinkingModifier, ForceMode.Force);
         }
     }
 }
