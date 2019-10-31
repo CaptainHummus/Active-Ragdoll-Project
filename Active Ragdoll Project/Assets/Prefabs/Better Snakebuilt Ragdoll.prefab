@@ -122,7 +122,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000008940697, y: -0.74999964, z: 0.00000014901161}
+  m_ConnectedAnchor: {x: -0.0000004470348, y: -0.74999964, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -406,7 +406,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: -0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.48274678, y: 0.0022084373, z: 0.11763101}
+  m_ConnectedAnchor: {x: -0.48274678, y: 0.0022086746, z: 0.117630936}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 767673329}
   - component: {fileID: 767673326}
   m_Layer: 0
-  m_Name: Eyebrow
+  m_Name: Right Eyebrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +612,7 @@ Transform:
   m_GameObject: {fileID: 767673324}
   m_LocalRotation: {x: -0, y: 0.13052596, z: -0, w: 0.99144495}
   m_LocalPosition: {x: 0.33333355, y: -0.50999993, z: 0.3511103}
-  m_LocalScale: {x: 0.23956218, y: 0.027139531, z: 0.058290087}
+  m_LocalScale: {x: 0.30678332, y: 0.034754883, z: 0.07464628}
   m_Children:
   - {fileID: 1007469549}
   m_Father: {fileID: 4062878060711981908}
@@ -678,7 +678,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!153 &767673326
 ConfigurableJoint:
@@ -691,7 +691,7 @@ ConfigurableJoint:
   m_Anchor: {x: -0.1, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.31164595, y: -0.50999993, z: 0.36273244}
+  m_ConnectedAnchor: {x: 0.30370077, y: -0.5099997, z: 0.35905045}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -722,7 +722,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 20
+    limit: 15
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -884,7 +884,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.33333355, y: -0.44999948, z: 0.0230013}
+  m_ConnectedAnchor: {x: 0.33333355, y: -0.4499999, z: 0.022999976}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1353,7 +1353,7 @@ Light:
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 0, g: 0.6603774, b: 0.015538369, a: 1}
-  m_Intensity: 100
+  m_Intensity: 10
   m_Range: 30
   m_SpotAngle: 50
   m_InnerSpotAngle: 1
@@ -1695,7 +1695,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.48274678, y: 0.0022084373, z: 0.11763101}
+  m_ConnectedAnchor: {x: 0.48274678, y: 0.0022086746, z: 0.117630936}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1793,7 +1793,7 @@ GameObject:
   - component: {fileID: 1679962996}
   - component: {fileID: 1679962993}
   m_Layer: 0
-  m_Name: Eyebrow
+  m_Name: Left Eyebrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1808,7 +1808,7 @@ Transform:
   m_GameObject: {fileID: 1679962991}
   m_LocalRotation: {x: -0, y: -0.13052598, z: -0, w: 0.99144495}
   m_LocalPosition: {x: -0.33333355, y: -0.50999993, z: 0.3511103}
-  m_LocalScale: {x: 0.23956218, y: 0.027139531, z: 0.058290087}
+  m_LocalScale: {x: 0.30678332, y: 0.034754883, z: 0.07464628}
   m_Children:
   - {fileID: 1450267117}
   m_Father: {fileID: 4062878060711981908}
@@ -1874,7 +1874,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 14
   m_CollisionDetection: 0
 --- !u!153 &1679962993
 ConfigurableJoint:
@@ -1887,7 +1887,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0.1, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.31164595, y: -0.50999993, z: 0.36273244}
+  m_ConnectedAnchor: {x: -0.30370077, y: -0.5099997, z: 0.35905045}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -1918,7 +1918,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 20
+    limit: 15
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -2080,7 +2080,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.9999695, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.33333355, y: -0.44999948, z: 0.0230013}
+  m_ConnectedAnchor: {x: -0.33333355, y: -0.4499999, z: 0.022999976}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -2286,7 +2286,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: -0.5, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000007450582, y: 0.74999964, z: 0.00000014901161}
+  m_ConnectedAnchor: {x: 0.00000037252906, y: 0.74999964, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -2412,7 +2412,7 @@ Light:
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 0, g: 0.6603774, b: 0.015538369, a: 1}
-  m_Intensity: 100
+  m_Intensity: 10
   m_Range: 30
   m_SpotAngle: 50
   m_InnerSpotAngle: 1
@@ -2927,7 +2927,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -0.7762083, z: -0.00093096495}
+  m_ConnectedAnchor: {x: 0, y: -0.7762079, z: -0.0009317994}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3133,7 +3133,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000019073486, y: -0.360493, z: 0.20012051}
+  m_ConnectedAnchor: {x: 0.0000019073486, y: -0.36049247, z: 0.20012075}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3339,7 +3339,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -1.034073, z: -0.07059622}
+  m_ConnectedAnchor: {x: 0, y: -1.0340725, z: -0.070596695}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -3551,8 +3551,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardsForce: 0.2
   upwardForce: 0.1
-  rotationTorque: 8
-  jumpForce: 15
+  rotationTorque: 400
+  jumpForce: 50
+  jumpCharge: 0
   thighs:
   - {fileID: 4062878060127560426}
   - {fileID: 4062878059959041497}
@@ -3565,7 +3566,14 @@ MonoBehaviour:
   feet:
   - {fileID: 4062878059555856701}
   - {fileID: 4062878060403744867}
+  risingModifier: 20
+  sinkingModifier: 60
+  rayDistance: 0.95
+  uprightComponents:
+  - {fileID: 4062878059878272234}
+  - {fileID: 4062878060711981906}
   pacelength: 1
+  rb: {fileID: 4062878059878272239}
 --- !u!114 &4062878059878272234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3578,14 +3586,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c4c20d90de586c47b0d176a04aca889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdUpright: 1
-  isGrounded: 1
-  upwardForce: 50
-  downwardForce: 10
-  risingModifier: 20
-  sinkingModifier: 20
-  rayDistance: 0.9
   rb: {fileID: 4062878059878272239}
+  holdUpright: 1
+  upwardForce: 50
+  downwardForce: 20
 --- !u!1 &4062878059898507543
 GameObject:
   m_ObjectHideFlags: 0
@@ -3800,7 +3804,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.27585512, y: 0.082761645, z: -0.1877278}
+  m_ConnectedAnchor: {x: -0.27585512, y: 0.08276216, z: -0.18772781}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -4006,7 +4010,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.27585512, y: 0.082761645, z: -0.1877278}
+  m_ConnectedAnchor: {x: 0.27585512, y: 0.08276216, z: -0.18772781}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -4212,7 +4216,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -0.3604927, z: 0.2001211}
+  m_ConnectedAnchor: {x: 0, y: -0.36049217, z: 0.20012134}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -4418,7 +4422,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -1.0340732, z: -0.07059622}
+  m_ConnectedAnchor: {x: 0, y: -1.0340728, z: -0.07059479}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -4625,7 +4629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4062878060711981909}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5000008}
+  m_LocalPosition: {x: 0, y: 0, z: 1.45}
   m_LocalScale: {x: 0.90000004, y: 0.6000001, z: 0.45000002}
   m_Children:
   - {fileID: 4062878059009991330}
@@ -4720,10 +4724,10 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4062878060711981909}
   m_ConnectedBody: {fileID: 4062878059878272239}
-  m_Anchor: {x: 0, y: 0, z: -0.5}
+  m_Anchor: {x: 0, y: 0, z: -1}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0.014907343, z: 0.79401}
+  m_ConnectedAnchor: {x: 0, y: 0.008834139, z: 0.47052363}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0
@@ -4754,11 +4758,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 5
+    limit: 10
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 0
+    limit: 10
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -4819,14 +4823,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c4c20d90de586c47b0d176a04aca889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 4062878060711981910}
   holdUpright: 1
-  isGrounded: 1
   upwardForce: 50
   downwardForce: 10
-  risingModifier: 20
-  sinkingModifier: 20
-  rayDistance: 0
-  rb: {fileID: 4062878060711981910}
 --- !u!1 &4062878060715859080
 GameObject:
   m_ObjectHideFlags: 0
@@ -4949,7 +4949,7 @@ ConfigurableJoint:
   m_Anchor: {x: 0, y: 0.5, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -0.7762083, z: -0.00093096495}
+  m_ConnectedAnchor: {x: 0, y: -0.7762079, z: -0.0009317994}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 0

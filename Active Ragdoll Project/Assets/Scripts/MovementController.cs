@@ -114,7 +114,7 @@ public class MovementController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             //rb.constraints = RigidbodyConstraints.None;
-            rb.AddTorque(Vector3.right * rotationTorque  *Time.deltaTime);             //rotate leg parts and pelvis in opposite directions to make character crouch a bit
+            rb.AddTorque(Vector3.back * rotationTorque  *Time.deltaTime);             //rotate leg parts and pelvis in opposite directions to make character crouch a bit
             thighs[0].AddTorque(Vector3.forward * rotationTorque * Time.deltaTime);
             thighs[1].AddTorque(Vector3.forward * rotationTorque * Time.deltaTime);
             shins[0].AddTorque(Vector3.back * rotationTorque * Time.deltaTime);
@@ -161,7 +161,7 @@ public class MovementController : MonoBehaviour
             if (paceTick > 0.9 * magnitude)
             {
                 feet[0].AddForce(Vector3.down * upwardForce * 2, ForceMode.Impulse);
-                //pause between steps
+                //pause between steps and set foot down
             }
             else if (paceTick > 0.5 * magnitude)
             {
@@ -174,8 +174,8 @@ public class MovementController : MonoBehaviour
             }
             else if (paceTick > 0.4 * magnitude)
             {
-                feet[1].AddForce(Vector3.down * upwardForce *2, ForceMode.Impulse);
-                //pause between steps
+                feet[1].AddForce(Vector3.down * upwardForce * 2, ForceMode.Impulse);
+                //pause between steps and set foot down
             }
             else
             {
