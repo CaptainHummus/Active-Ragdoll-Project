@@ -317,15 +317,15 @@ public class MovementController : MonoBehaviour
             rb.AddForce(Vector3.down * sinkingModifier, ForceMode.Force);
         }
 
-        if (Physics.Raycast(rb.transform.position, Vector3.down, out RaycastHit hit2, rayDistance, 1 << 9))
-        {
-            Debug.Log("hit2: " + hit2.normal);
-            Debug.Log("hit2 rad2deg: " + hit2.normal * Mathf.Rad2Deg);
+        //if (Physics.Raycast(rb.transform.position, Vector3.down, out RaycastHit hit2, rayDistance, 1 << 9))
+        //{
+        //    Debug.Log("hit2: " + hit2.normal);
+        //    Debug.Log("hit2 rad2deg: " + hit2.normal * Mathf.Rad2Deg);
 
-            transform.localRotation = Quaternion.FromToRotation(transform.up, hit2.normal) * transform.rotation;
+        //    transform.localRotation = Quaternion.FromToRotation(transform.up, hit2.normal) * transform.rotation;
 
 
-        }
+        //}
     }
 
 }
