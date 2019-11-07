@@ -293,7 +293,7 @@ public class MovementController : MonoBehaviour
 
     private void GroundCheck()
     {
-        if (Physics.Raycast(rb.transform.position, -transform.forward, rayDistance, 1 << 9))
+        if (Physics.Raycast(rb.transform.position, -transform.forward, out RaycastHit hit, rayDistance, 1 << 9))
         {
             Debug.DrawRay(rb.transform.position, -transform.forward * rayDistance, Color.red);
             if (!isGrounded)
@@ -301,7 +301,10 @@ public class MovementController : MonoBehaviour
                 isGrounded = true;
                 ToggleUpright(true);
             }
-            rb.AddForce(Vector3.up * risingModifier, ForceMode.Force); //TODO use raycast normal to add forces instead of "up"
+
+            Debug.Log("hit: " + hit.normal);
+            Debug.Log("hit rad2deg: " + hit.normal * Mathf.Rad2Deg);
+            rb.AddForce(Vector3.up * risingModifier, ForceMode.Force);
         }
         else
         {
@@ -313,5 +316,16 @@ public class MovementController : MonoBehaviour
             }
             rb.AddForce(Vector3.down * sinkingModifier, ForceMode.Force);
         }
+
+        if (Physics.Raycast(rb.transform.position, Vector3.down, out RaycastHit hit2, rayDistance, 1 << 9))
+        {
+            Debug.Log("hit2: " + hit2.normal);
+            Debug.Log("hit2 rad2deg: " + hit2.normal * Mathf.Rad2Deg);
+
+            transform.localRotation = Quaternion.FromToRotation(transform.up, hit2.normal) * transform.rotation;
+
+
+        }
     }
+
 }
