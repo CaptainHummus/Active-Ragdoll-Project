@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class MovementController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class MovementController : MonoBehaviour
     public Rigidbody[] knees;
     public Rigidbody[] shins;
     public Rigidbody[] feet;
+    public Rigidbody head;
 
     [Header("Upright Raycast Mods")]
     [SerializeField] private float risingModifier = 20f;
@@ -133,7 +135,7 @@ public class MovementController : MonoBehaviour
             feet[0].AddForce(-transform.up * jumpForce * jumpCharge/10, ForceMode.Impulse);
             jumpCharge = 0f;
             rb.constraints = RigidbodyConstraints.None;
-            //ToggleUpright(true);
+            ToggleUpright(true);
         }
         else if (Input.GetKeyUp(KeyCode.Space) && !isGrounded)
         {
@@ -302,8 +304,8 @@ public class MovementController : MonoBehaviour
                 ToggleUpright(true);
             }
 
-            Debug.Log("hit: " + hit.normal);
-            Debug.Log("hit rad2deg: " + hit.normal * Mathf.Rad2Deg);
+            //Debug.Log("hit: " + hit.normal);
+            //Debug.Log("hit rad2deg: " + hit.normal * Mathf.Rad2Deg);
             rb.AddForce(Vector3.up * risingModifier, ForceMode.Force);
         }
         else
@@ -317,15 +319,31 @@ public class MovementController : MonoBehaviour
             rb.AddForce(Vector3.down * sinkingModifier, ForceMode.Force);
         }
 
-        //if (Physics.Raycast(rb.transform.position, Vector3.down, out RaycastHit hit2, rayDistance, 1 << 9))
+        //if (Physics.Raycast(rb.transform.position, Vector3.down * 1.2f, out RaycastHit hit2, rayDistance, 1 << 9))
         //{
-        //    Debug.Log("hit2: " + hit2.normal);
-        //    Debug.Log("hit2 rad2deg: " + hit2.normal * Mathf.Rad2Deg);
+        //    //Debug.Log("hit2: " + hit2.normal);
+        //    //Debug.Log("hit2 rad2deg: " + hit2.normal * Mathf.Rad2Deg);
+        //    //transform.localRotation = Quaternion.FromToRotation(transform.up, hit2.normal) * transform.rotation;
 
-        //    transform.localRotation = Quaternion.FromToRotation(transform.up, hit2.normal) * transform.rotation;
 
+        //    //rb.constraints = RigidbodyConstraints.FreezeRotationZ;
 
+        //    rb.transform.DOLookAt(hit.point, 2f, AxisConstraint.None, Vector3.right);
+        //    //rb.DOLookAt(hit.point, 1f, AxisConstraint.X, Vector3.forward);
+
+        //    Debug.Log("Balancing pelvis rotation");
+
+        //    //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         //}
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.relativeVelocity.magnitude > 3)
+        {
+            //Debug.Log("col magnitude: " + collision.relativeVelocity.magnitude);
+            ToggleUpright(false);
+            head.AddForce(Vector3.down * jumpForce * 0.2f, ForceMode.Impulse);
+        }
+    }
 }
