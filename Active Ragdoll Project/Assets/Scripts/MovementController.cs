@@ -139,7 +139,7 @@ public class MovementController : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.Space) && !isGrounded)
         {
-            ToggleUpright(true);
+            ToggleUpright();
             jumpCharge = 0f;
         }
         if (Input.GetKeyDown(KeyCode.Q))
