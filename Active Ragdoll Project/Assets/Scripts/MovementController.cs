@@ -28,6 +28,9 @@ public class MovementController : MonoBehaviour
     [Header ("Misc")]
     public Upright[] uprightComponents;
     [SerializeField] private float pacelength = 2f;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitAudioClip;
+
     private bool walkingForward;
     private bool walkingBackward;
     private bool sprinting;
@@ -44,6 +47,7 @@ public class MovementController : MonoBehaviour
     {
         //rb = GetComponent<Rigidbody>();
         cameraObject = Camera.main.gameObject;
+        audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -135,7 +139,7 @@ public class MovementController : MonoBehaviour
             feet[0].AddForce(-transform.up * jumpForce * jumpCharge/10, ForceMode.Impulse);
             jumpCharge = 0f;
             rb.constraints = RigidbodyConstraints.None;
-            ToggleUpright(true);
+            ToggleUpright(false);
         }
         else if (Input.GetKeyUp(KeyCode.Space) && !isGrounded)
         {
@@ -339,11 +343,13 @@ public class MovementController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.relativeVelocity.magnitude > 3)
+        //This function will make arms/legs trigger with pelvis sometimes. Rework this in future.
+        if (collision.relativeVelocity.magnitude > 1 && collision.gameObject.CompareTag("Hostile"))
         {
             //Debug.Log("col magnitude: " + collision.relativeVelocity.magnitude);
             ToggleUpright(false);
             head.AddForce(Vector3.down * jumpForce * 0.2f, ForceMode.Impulse);
+            audioSource.Play();
         }
     }
 }

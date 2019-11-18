@@ -30,6 +30,9 @@ public class SoundController : MonoBehaviour
         {
             music.DOPitch(music.pitch -= 0.25f, 1f);
         }
+
+        music.pitch = Mathf.Clamp(music.pitch, -3, +3);
+
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.M))
         {
             if (!isMusicMuted)

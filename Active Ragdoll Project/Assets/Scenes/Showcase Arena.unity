@@ -15303,7 +15303,7 @@ GameObject:
   - component: {fileID: 390435949}
   m_Layer: 0
   m_Name: Smacker Arm (1)
-  m_TagString: Untagged
+  m_TagString: Hostile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55817,6 +55817,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Smacker
       objectReference: {fileID: 0}
+    - target: {fileID: 1785377246693754521, guid: b4fbf2a1b9d7a8f40b877515fde51734,
+        type: 3}
+      propertyPath: m_TagString
+      value: Hostile
+      objectReference: {fileID: 0}
     - target: {fileID: 1785377246693754522, guid: b4fbf2a1b9d7a8f40b877515fde51734,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -55891,6 +55896,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.35557204
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785377247406240427, guid: b4fbf2a1b9d7a8f40b877515fde51734,
+        type: 3}
+      propertyPath: m_TagString
+      value: Hostile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4fbf2a1b9d7a8f40b877515fde51734, type: 3}
@@ -59114,6 +59124,109 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1841460391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4062878059878272237, guid: 47abf8947cd30d648980e5d2d2863df2,
+    type: 3}
+  m_PrefabInstance: {fileID: 4062878060799069749}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1841460398
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841460391}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 1601550180160739621, guid: f0e0f83a98b5848459991f411ae05aff,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 456d1aee08f07eb41837f42d46eaa9c7, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 20
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1873839863
 GameObject:
   m_ObjectHideFlags: 0
@@ -69925,6 +70038,11 @@ PrefabInstance:
       propertyPath: m_AngularYLimit.limit
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4062878059878272235, guid: 47abf8947cd30d648980e5d2d2863df2,
+        type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1841460398}
     - target: {fileID: 4062878059147145181, guid: 47abf8947cd30d648980e5d2d2863df2,
         type: 3}
       propertyPath: m_ConnectedAnchor.y
