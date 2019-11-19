@@ -24,6 +24,7 @@ public class MovementController : MonoBehaviour
     [SerializeField] private float sinkingModifier = 20f;
     [SerializeField] private float rayDistance = 1f;
     private bool isGrounded;
+    private bool deactivateRay;
 
     [Header ("Misc")]
     public Upright[] uprightComponents;
@@ -299,29 +300,33 @@ public class MovementController : MonoBehaviour
 
     private void GroundCheck()
     {
-        if (Physics.Raycast(rb.transform.position, -transform.forward, out RaycastHit hit, rayDistance, 1 << 9))
+        if (!deactivateRay)
         {
-            Debug.DrawRay(rb.transform.position, -transform.forward * rayDistance, Color.red);
-            if (!isGrounded)
+            if (Physics.Raycast(rb.transform.position, -transform.forward, out RaycastHit hit, rayDistance, 1 << 9))
             {
-                isGrounded = true;
-                ToggleUpright(true);
-            }
+                Debug.DrawRay(rb.transform.position, -transform.forward * rayDistance, Color.red);
+                if (!isGrounded)
+                {
+                    isGrounded = true;
+                    ToggleUpright(true);
+                }
 
-            //Debug.Log("hit: " + hit.normal);
-            //Debug.Log("hit rad2deg: " + hit.normal * Mathf.Rad2Deg);
-            rb.AddForce(Vector3.up * risingModifier, ForceMode.Force);
-        }
-        else
-        {
-            Debug.DrawRay(rb.transform.position, -transform.forward * rayDistance, Color.green);
-            if (isGrounded)
-            {
-                isGrounded = false;
-                //ToggleUpright(false);
+                //Debug.Log("hit: " + hit.normal);
+                //Debug.Log("hit rad2deg: " + hit.normal * Mathf.Rad2Deg);
+                rb.AddForce(Vector3.up * risingModifier, ForceMode.Force);
             }
-            rb.AddForce(Vector3.down * sinkingModifier, ForceMode.Force);
+            else
+            {
+                Debug.DrawRay(rb.transform.position, -transform.forward * rayDistance, Color.green);
+                if (isGrounded)
+                {
+                    isGrounded = false;
+                    //ToggleUpright(false);
+                }
+                rb.AddForce(Vector3.down * sinkingModifier, ForceMode.Force);
+            }
         }
+
 
         //if (Physics.Raycast(rb.transform.position, Vector3.down * 1.2f, out RaycastHit hit2, rayDistance, 1 << 9))
         //{
@@ -344,12 +349,19 @@ public class MovementController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //This function will make arms/legs trigger with pelvis sometimes. Rework this in future.
-        if (collision.relativeVelocity.magnitude > 1 && collision.gameObject.CompareTag("Hostile"))
+        if (collision.relativeVelocity.magnitude > 0.5 && collision.gameObject.CompareTag("Hostile"))
         {
             //Debug.Log("col magnitude: " + collision.relativeVelocity.magnitude);
             ToggleUpright(false);
             head.AddForce(Vector3.down * jumpForce * 0.2f, ForceMode.Impulse);
-            audioSource.Play();
+            audioSource.PlayOneShot(hitAudioClip, 1f);
+            StartCoroutine("DisableRayTemporarily", 5f);
         }
+    }
+    IEnumerator DisableRayTemporarily(float time)
+    {
+        deactivateRay = true;
+        yield return new WaitForSeconds(time);
+        deactivateRay = false;
     }
 }
